@@ -1,20 +1,20 @@
 # Cumulus
 
-> Cumulus clouds are shaped sort of like dots and are up in the air, like this project (as it is an initial prototype -- expect a rename when it gets cooler.)
+> Cumulus clouds tienen forma de lunares y están en el aire, como este proyecto (ya que es un prototipo inicial - esperar un cambio de nombre cuando se enfríe).
 
-[Cumulus](https://github.com/paritytech/cumulus) is an extension to Substrate that makes it easy to make any Substrate built runtime into a Polkadot compatible parachain.
+[Cumulus](https://github.com/paritytech/cumulus) es una extensión de Substrate que facilita la integración de cualquier tiempo de ejecución de Substrate en una parachain compatible con Polkadot.
 
-## Components
+## Componentes
 
-### Cumulus Consensus
+### Consenso Cumulus
 
-*cumulus-consensus* is a consensus engine for Substrate which follows a Polkadot relay chain. This will run a Polkadot node internally, and dictate to the client and synchronization algorithms which chain to follow, finalize, and treat as best.
+*cumulus-consensus* es un motor de consenso para Substrate que sigue una relay chain de Polkadot. Esto ejecutará un nodo Polkadot internamente y dictará al cliente y a los algoritmos de sincronización qué cadena seguir, finalizar y tratar de la mejor manera.
 
 ### Cumulus Runtime
 
-A wrapper around Substrate runtimes to allow them to be validated by Polkadot validators and provide witness generating routines. It adds a `validate_block` API to the Substrate external interface which will be called by validators.
+Una envoltura alrededor de los tiempos de ejecución de Substrate para permitir que sean validados por los validadores de Polkadot y proporcionar rutinas de generación de testigos. Añade una API `validate_block` a la interfaz externa Substrate que será llamada por los validadores.
 
-Integrating it into your substrate runtime will be as easy as importing the crate and adding this one line macro to your code.
+Integrarlo en el tiempo de ejecución de su substrate será tan fácil como importar la caja y añadir esta macro de una línea a su código.
 
 ``` rust
 runtime::register_validate_block!(Block, BlockExecutor);
@@ -22,8 +22,8 @@ runtime::register_validate_block!(Block, BlockExecutor);
 
 ### Cumulus Collator
 
-A planned Polkadot collator for a parachain.
+Una emparejadora Polkadot planeada para una parachain.
 
-## Resources 
+## Recursos 
 
-- [Rob's talk from EthCC introducing Cumulus](https://www.youtube.com/watch?v=thgtXq5YMOo)
+- [La charla de Rob de EthCC presentando Cumulus](https://www.youtube.com/watch?v=thgtXq5YMOo)
