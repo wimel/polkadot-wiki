@@ -1,421 +1,217 @@
-# How to start building on Polkadot
+# Cómo empezar a desarrollar en Polkadot
 
-!!! attention
-    _Polkadot and Substrate are both under active development and things are changing rapidly. It should calm down in a couple weeks with the [1.0 release](https://github.com/paritytech/substrate/milestone/9) of Substrate but be aware that the APIs are still evolving._
+!!! info
+    _Polkadot y Substrate están en desarrollo activo y las cosas están cambiando rápidamente. Debería calmarse en un par de semanas con la [versión 1.0](https://github.com/paritytech/substrate/milestone/9) de Substrate, pero tenga en cuenta que las APIs aún están evolucionando._
 
-Polkadot is described in the [whitepaper](https://github.com/w3f/polkadot-white-paper/raw/master/PolkaDotPaper.pdf) as a fully extensible
-and scalable blockchain development, deployment, and interaction test bed.
-Builders will have the ability to use this exciting new technology
-as the infrastructure for their own applications.
+Polkadot se describe en el [whitepaper](https://github.com/w3f/polkadot-white-paper/raw/master/PolkaDotPaper.pdf) como un banco de pruebas de desarrollo, despliegue e interacción de cadenas de bloques totalmente extensible y escalable. Los desarrolladores tendrán la capacidad de utilizar esta nueva e interesante tecnología como infraestructura para sus propias aplicaciones.
 
-This guide will walk you through the [current state of Polkadot](#where-are-we-now) development, explain the [difference between a
-parachain and a smart contract](#what-is-the-difference-between-a-parachain-and-smart-contract), walk through
-the necessary steps to take to [build a parachain](#so-you-want-to-build-a-parachain) from [starting a new project](#starting-a-new-project) to [including your chain in Polkadot](#how-to-include-your-parachain-in-polkadot); or to [build a smart contract](#so-you-want-to-build-a-smart-contract) from picking a platform to [paying for the deployment](#paying-for-your-smart-contract). 
+Esta guía le guiará a través del [estado actual](#where-are-we-now) del desarrollo de Polkadot, le explicará la [diferencia entre una parachain y un contrato inteligente](#what-is-the-difference-between-a-parachain-and-smart-contract), le explicará los pasos necesarios para [construir una parachain](#so-you-want-to-build-a-parachain) desde el [inicio de un nuevo proyecto](#starting-a-new-project) hasta la [inclusión de su cadena en Polkadot](#how-to-include-your-parachain-in-polkadot); o para [desarrollar un contrato inteligente](#so-you-want-to-build-a-smart-contract) desde la elección de una plataforma hasta el [pago de la implementación](#paying-for-your-smart-contract).
 
-## Where are we now?
+## ¿Dónde estamos ahora?
 
-Polkadot has achieved the PoC 3 milestone and has been successfully running the
-Alexander testnet for three months. Progress is steadily being made toward the next
-PoC-4 release which will include interchain messaging. Development is on track for a 
-mainnet launch by the end of the year.
+Polkadot ha alcanzado el hito PoC 3 y ha estado funcionando con éxito la red de pruebas Alexander durante tres meses. Se está avanzando constantemente hacia la próxima versión de PoC-4, que incluirá la mensajería entre cadenas. El desarrollo está en marcha para el lanzamiento de la Mainnet a finales de año.
 
-Meanwhile, Substrate which is the runtime module library on which Polkadot is being
-built, is closely approaching its first stable release. Substrate allows builders
-to re-use many of the pieces that are being used to create Polkadot and compose
-them into their own chain. It is also easily extensible by writing custom _runtime
-modules_ which dictate the runtime logic of the chain.
+Mientras tanto, Substrate, que es la biblioteca de módulos en tiempo de ejecución sobre la que se está construyendo Polkadot, se está acercando a su primera versión estable. Substrate permite a los desarrolladores reutilizar muchas de las partes que se están utilizando para crear Polkadot y componerlas en su propia cadena. También es fácilmente extensible escribiendo módulos de tiempo de ejecución personalizados que dictan la lógica de tiempo de ejecución de la cadena.
 
-If you are a developer, builder, entrepreneur, or otherwise a visionary
-considering Polkadot as the ecosystem for your next project, this guide
-will help you understand your options for development and decide what
-stack is right for you and your project. It will show you the resources
-available which you can use to begin planning and executing on your idea today. 
+Si usted es un desarrollador, constructor, empresario, o un visionario que considera a Polkadot como el ecosistema para su próximo proyecto, esta guía le ayudará a entender sus opciones de desarrollo y a decidir qué stack es el adecuado para usted y para su proyecto. Le mostrará los recursos disponibles que puede utilizar para comenzar a planificar y ejecutar su idea hoy mismo.
 
-## What is the difference between a parachain and smart contract?
+## ¿Cuál es la diferencia entre una parachain y un contrato inteligente?
 
-Before you can begin any work on your idea at all, it is important
-that you understand the trade-offs between the two development options
-you have for building on Polkadot: parachains or smart contracts.
+Antes de que pueda empezar a trabajar en su idea, es importante que entienda las ventajas y desventajas entre las dos opciones de desarrollo que tiene para construir sobre Polkadot: parachains o contratos inteligentes.
 
-Parachains are the individual chains which will connect into the Polkadot
-network to benefit from the shared security of the Polkadot relay chain
-validator set. Polkadot itself is being built with the same tools available
-to start creating parachains. Parachains allow for flexibility and less
-constraints on what is possible in the chain logic but come with some 
-additional overhead which makes it so that they aren't always the preferable
-option when compared to smart contracts.
+Las parachains son las cadenas individuales que se conectarán a la red Polkadot para beneficiarse de la seguridad compartida del conjunto de validadores de la relay chain de Polkadot. Polkadot se está construyendo con las mismas herramientas disponibles para empezar a crear parachains. Las parachains permiten flexibilidad y menos restricciones sobre lo que es posible en la lógica de la cadena, pero vienen con una sobrecarga adicional que hace que no siempre sean la opción preferible cuando se comparan con los contratos inteligentes.
 
-Smart contracts are executable programs that exist on a specific chain. They
-often have nice interoperability compatible with other applications on the
-same chain, but can not really interact with something on another chain. They
-come with less development overhead than building a full parachain but imply
-more constraints on what is allowed by the application logic. They are good
-mediums to try initial prototyping with, but eventually may outgrow themselves
-due to scalability constraints or complexity overload.
+Los contratos inteligentes son programas ejecutables que existen en una cadena específica. Ellos a menudo tienen una buena interoperabilidad compatible con otras aplicaciones de la plataforma en la misma cadena, pero no puede realmente interactuar con algo en otra cadena. Ellos vienen con menos gastos de desarrollo que la construcción de una parachain completa, pero implican más restricciones sobre lo que permite la lógica de la aplicación. Son buenos medios con los que probar el prototipado inicial, pero que con el tiempo pueden superarse a sí mismos debido a restricciones de escalabilidad o sobrecarga de complejidad.
 
-Broadly speaking, if you want to have control over the protocol mechanics of
-your network then a parachain will be the good option for you. 
+En términos generales, si quieres tener control sobre la mecánica de protocolo de tu red, entonces una parachain será la mejor opción para ti.
 
-Building a parachain means that you can design the economics of the monetary system 
-from the ground up. You can implement a custom fee structure into your transactions
-or a full-on treasury system which could act as a native DAO and uses portions
-of the block reward to allow stakeholders to allocate funds. 
+Construir una parachain significa que se puede diseñar la economía del sistema monetario desde cero. Puede implementar una estructura de tarifas personalizada en sus transacciones o un sistema de tesorería completo que podría actuar como una DAO nativa y utilizar porciones de la recompensa en bloque para permitir a las partes interesadas asignar fondos.
 
-It opens up the flexibility to construct complex logic that may be too expensive
-to run as a smart contract. If there is a specific feature your chain will use
-as a cornerstone, you can even implement an optimized runtime for it to make it
-cheaper and faster.
+Esto abre la flexibilidad para construir una lógica compleja que puede ser demasiado costosa para ser ejecutada como un contrato inteligente. Si hay una característica específica que su cadena utilizará como piedra angular, puede incluso implementar un tiempo de ejecución optimizado para que sea más barato y rápido.
 
-If there is a specific use case you are thinking of such as implementing a 
-completely new type of virtual machine, you will be able to do this by building
-a parachain.
+Si hay un caso de uso específico en el que está pensando, como la implementación de un tipo completamente nuevo de máquina virtual, podrá hacerlo construyendo una parachain.
 
-Instead if you want a lower barrier to entry and more rapid iteration cycles
-for quick prototyping and deployment, you will be more attracted to the smart
-contract medium. 
+En cambio, si desea una barrera de entrada más baja y ciclos de iteración más rápidos para la creación rápida de prototipos y la implementación, se sentirá más atraído por el medio de contrato inteligente.
 
-Smart contracts are usually simpler than parachain logic and therefore
-take less time to develop. They will have strong tooling like IDEs that
-allow you to get your idea out into the world that much quicker.
+Los contratos inteligentes suelen ser más sencillos que la lógica de la parachain y por lo tanto tardan menos tiempo en desarrollarse. Tendrán herramientas fuertes como los IDEs que le permiten sacar su idea al mundo mucho más rápido.
 
-As mentioned before, they will have access to the environment of the chain
-for which they are deployed. If your application requires interaction with
-a system that is already deployed on a chain as a smart contract, it will
-in most cases make the most sense to also write your application as a smart
-contract on the same chain.
+Como se ha mencionado anteriormente, tendrán acceso al entorno de la cadena para la que están desplegados. Si su aplicación requiere interacción con un sistema que ya está desplegado en una cadena como un contrato inteligente, en la mayoría de los casos tendrá más sentido escribir su aplicación como un contrato inteligente en la misma cadena.
 
-An example of the composable of smart contracts is evident in the recent phenomenon
-of DeFi (decentralized finance) applications. Projects like [Maker](https://makerdao.com)
-opened the way for further application to be constructed on top of them
-such as decentralized hedge funds and loan management systems.
+Un ejemplo de la composición de los contratos inteligentes es evidente en el reciente fenómeno de las aplicaciones DeFi (finanzas descentralizadas). Proyectos como [Maker](https://makerdao.com/) abrieron el camino para que se construyeran nuevas aplicaciones sobre ellos, como los fondos de cobertura descentralizados y los sistemas de gestión de préstamos.
 
-There will be more overhead to creating a parachain that simply
-will not exist for deploying your application as smart contracts.
-These include running collator nodes for your parachain, or incentivizing them
-in some way, and staking DOTs or otherwise convincing the Polkadot governance
-mechanism to include your chain on the parachain registry.
+Habrá más gastos generales para crear una parachain que simplemente no existirá para desplegar su aplicación como contratos inteligentes. Esto incluye ejecutar nodos collators para su parachain, o incentivarlos de alguna manera, y vincular DOTs o convencer al mecanismo de gobierno de Polkadot para que incluya su cadena en el registro de la parachain.
 
-Unless you're absolutely sure that your project needs to be a parachain
-or if you're just looking forward to experimenting with new tech, it
-is advisable you start by first creating an MVP of your decentralized
-application as a smart contract.
+A menos que esté absolutamente seguro de que su proyecto necesita ser una parachain o si sólo está deseando experimentar con nuevas tecnologías, es aconsejable que empiece por crear primero un MVP de su aplicación descentralizada como un contrato inteligente.
 
-Here is a quick comparison chart to help you digest the information:
+Aquí hay una tabla de comparación rápida para ayudarle a comprender la información:
 
 | Parachain | Smart Contract |
 |-----------|----------------|
-| more complex to develop (-) | easy to develop (+) |
-| requires collator node to deploy (-) | easy to deploy (+)  |
-| interaction between parachains (+) | interaction between applications (+) |
-| requires network maintenance (-) | easier to maintain (+) |
-| possible to implement complex network logic and advanced crypto (+) | harder to implement complex logic or crypto (-) |
-| is its own network (+) | exists on a network (-) |
+| más complejo para desarrollar (-) | fácil para desarrollar (+) |
+| requiere un nodo collator para el desarrollo (-) | fácil para desarrollar (+)  |
+| intereacción entre parachains (+) | interacción entre aplicaciones (+) |
+| requiere mantenimiento de la red (-) | fácil de mantener (+) |
+| posible implementar lógica de red compleja y criptografía avanzada (+) | más difícil de implementar lógica compleja o criptografía (-) |
+| es su propia red (+) | existe en una red (-) |
 
-This guide now splits into two depending on the decision that you have made to 
-develop your project as a parachain or as a smart contract.
+Esta guía ahora se divide en dos dependiendo de la decisión que usted haya tomado de desarrollar su proyecto como una parachain o como un contrato inteligente.
 
-- [I want to build a parachain](#so-you-want-to-build-a-parachain)
-- [I want to build a smart contract](#so-you-want-to-build-a-smart-contract)
+- [Quiero desarrollar una parachain](#so-you-want-to-build-a-parachain)
+- [Quiero desarrollar un contrato inteligente](#so-you-want-to-build-a-smart-contract)
 
-## So you want to build a parachain
+## Entonces, quieres construir una parachain
 
-Once you've determined that creating a parachain is the right approach for your
-project, the next step is to decide what tools and framework you will use. Right
-now the choice is easy since you only have one option: Parity's Substrate.
+Una vez que haya determinado que la creación de una parachain es el enfoque correcto para su proyecto, el siguiente paso es decidir qué herramientas y marco de trabajo utilizará. Ahora mismo la elección es fácil, ya que sólo tienes una opción: Substrate de Parity.
 
-> Actually, its not strictly true that Substrate is your only choice since you could write all your chain logic
-from scratch as long as it compiled to Wasm and has the correct interaction interface for Polkadot.
-But this approach will not
-benefit from the modular re-usability and developer friendliness that frameworks like Substrate enable.
+> En realidad, no es estrictamente cierto que Substrate sea su única opción, ya que puede escribir toda la lógica de la cadena desde cero siempre y cuando esté compilada en Wasm y tenga la interfaz de interacción correcta para Polkadot. Pero este enfoque no se beneficiará de la reutilización modular y la facilidad de desarrollo que permiten las estructuras como Substrate.
 
 ### Substrate
 
-Substrate is a framework for blockchain innovators. It provides the basic building
-blocks that are needed to construct a chain and provides a pluggable and modular
-library of runtime modules from which to compose your chain logic. The motivation
-of building it was to bring the development time of a new blockchain down from years
-to weeks and days or even hours for simplistic chains.
+Substrate es un framework para los innovadores de la cadena de bloques. Proporciona los bloques de construcción básicos que se necesitan para construir una cadena y proporciona una biblioteca fácil de conectar y modular de módulos de tiempo de ejecución a partir de los cuales se puede componer la lógica de la cadena. La motivación de construirlo fue reducir el tiempo de desarrollo de una nueva cadena de bloques de años a semanas y días o incluso horas para cadenas simples.
 
-The most definitive resource regarding Substrate development is the Parity maintained
-[Substrate Development Hub](https://docs.substrate.dev) which covers material from
-beginning your first parachain from a template to building Dappchains like Cryptokitties.
+El recurso más definitivo con respecto al desarrollo de Substrate es el [Centro de Desarrollo de Substrate](https://docs.substrate.dev/) mantenido por Parity, que cubre el material desde el comienzo de su primera parachain desde una plantilla hasta la construcción de Dappchains como Cryptokitties.
 
-It is recommended that you poke around in there for a while until you become familiar
-with the patterns for how a Substrate chain will be built. Once you have a solid 
-understanding you can run through the [Token Curated Registry](https://docs.substrate.dev/docs/building-a-token-curated-registry-dappchain-using-substrate)
-or the [Substratekitties](https://shawntabrizi.github.io/substrate-collectables-workshop/) tutorials.
+Se recomienda que investigue un poco hasta que se familiarice con los patrones de cómo se construirá una cadena de Substrate. Una vez que tenga una comprensión sólida, puede ejecutar los tutoriales de [Token Curated Registry](https://docs.substrate.dev/docs/building-a-token-curated-registry-dappchain-using-substrate) o [Substratekitties](https://shawntabrizi.github.io/substrate-collectables-workshop/).
 
-#### Starting a new project
+#### Empezando un nuevo proyecto
 
-You will likely want to use the convenience script provided by the Substrate developers
-to start a new project template.
+Es probable que desee utilizar el script proporcionado por los desarrolladores de Substrate para iniciar una nueva plantilla de proyecto.
 
-First download the script by running this command:
+Primero descargue el script ejecutando este comando:
 
 ```bash
 curl https://getsubstrate.io -sSf | bash
 ```
 
-Then create your project by running:
+A continuación, cree su proyecto ejecutándo:
 
 ```bash
 substrate-node-new <myProject> <myName>
 ```
 
 !!! attention
-    _While Substrate is still pre-1.0 release it is recommended to use instead this [stable package](https://github.com/shawntabrizi/substrate-package) containing the node and ui instead of the script above._
+    _Aunque Substrate todavía es anterior a la versión 1.0, se recomienda utilizar en su lugar este [paquete estable](https://github.com/shawntabrizi/substrate-package) que contiene el nodo y ui en lugar del script anterior._
 
-### Setting up your chain
+### Configurando su cadena
 
-After you have created your chain logic using a framework like Substrate, you will
-compile it into a Wasm blob which contains your state transition function. This is
-the core of your blockchain and is what the validators on the Polkadot relay chain
-will validate all state transitions against. But before you're able to submit your
-chain into the Polkadot network there is still a couple things you
-need to take care of.
+Después de haber creado su lógica de cadena usando un framework como Substrate, lo compilarás en un Wasm blob que contiene su función de transición de estado. Este es el núcleo de su cadena de bloques y es a lo que los validadores de la relay chain de Polkadot validarán todas las transiciones de estado. Pero antes de que pueda enviar su cadena a la red de Polkadot, todavía hay un par de cosas de las que debe ocuparse.
 
-The two big things you will need to resolve when you are finished developing your chain
-logic are 1) you need to set up at least one collator node and 2) you will need to ensure
-your availability on the relay chain by acquiring a spot on the parachain registry.
+Las dos grandes cosas que necesitará resolver cuando termine de desarrollar su lógica de cadena son: 1) necesita configurar al menos un nodo collator y 2) necesitará asegurar su disponibilidad en la relay chain adquiriendo un lugar en el registro de parachain.
 
-The first one needs to be done because validators on the relay chain need some way
-to become aware of new state transitions coming from your chain. This functionality is
-handled by the specialized type of node known as the [collator](../learn/terms-and-definitions.md#collator).
-Basically collators are the nodes which will handle state transitions for your chain
-and handing those state transitions with proofs to validators to validate.
+El primero necesita ser hecho porque los validadores en la relay chain necesitan alguna forma de estar al tanto de las nuevas transiciones de estado que vienen de su cadena. Esta funcionalidad es manejada por el tipo de nodo especializado conocido como [collator](../learn/terms-and-definitions.md#collator). Básicamente, los collators son los nodos que manejarán las transiciones de estado de su cadena y entregarán esas transiciones de estado con pruebas a los validadores para que las validen.
 
-Your chain could have one validator or it could have many. They can be ran as public
-services by the developers or there could be an incentive structure baked into the parachain
-to encourage the community to operate them.
+Su cadena puede tener un validador o varios. Pueden ser administrados como servicios públicos por los desarrolladores o puede haber una estructura de incentivos implantada en la parachain para animar a la comunidad a que los opere.
 
-Right now it's still pretty early on in the development of definitive collator
-nodes which can be used for interaction with Polkadot.
-There is an early demo that is available in the Polkadot repository, this can be ran by
-following an early demo as shown in this [video tutorial](https://www.youtube.com/watch?v=pDqkzvA4C0E).
-As development continues there will be libraries that will make setting up a
-Polkadot-compatible parachain a no-brainer. One of these libraries is called Cumulus.
+En este momento es todavía muy temprano en el desarrollo de los nodos collator definitivos que pueden ser usados para la interacción con Polkadot. Hay una demo temprana que está disponible en el repositorio de Polkadot, esto puede ser ejecutado siguiendo una demo temprana como se muestra en este [video tutorial](https://www.youtube.com/watch?v=pDqkzvA4C0E). A medida que continúe el desarrollo, habrá bibliotecas que harán que la configuración de una parachain compatible con Polkadot sea muy sencilla. Una de estas bibliotecas se llama Cumulus.
 
 #### Cumulus
 
-[Cumulus](https://github.com/paritytech/cumulus) is still in
-development and is _not_ ready to use yet. It's intended goal is to be
-an extension to the Substrate library that will make any Substrate
-runtime compatible with Polkadot.
+[Cumulus](https://github.com/paritytech/cumulus) está todavía en desarrollo y no está listo para su uso. Su objetivo es ser una extensión de la librería de Substrate que hará que cualquier tiempo de ejecución de Substrate sea compatible con Polkadot.
 
-It will handle some of the overhead of any parachain that needs
-to be compatible with Polkadot. These include:
+Manejará parte de la sobrecarga de cualquier parachain que necesite ser compatible con Polkadot. Estos incluyen:
 
- - handling interchain messaging between parachains
- - out-of-the-box collator node
- - follows the relay chain with an embedded light client
- - compatible with Polkadot specific intricacies of block authorship
+ - gestión de mensajes entre parachains
+ - nodo collator out-of-the-box
+ - seguimiento de la relay chain con un cliente ligero integrado
+ - compatible con las complejidades específicas de Polkadot de la autoría en bloque
 
-Getting started with Cumulus once it's ready will be as easy as:
+Comenzar con Cumulus una vez que esté listo será tan fácil como:
 
- - Minimal modification to the Substrate chain already written
- - Cumulus will port it over with little effort
+ - Mínima modificación de la cadena de Substrate ya escrita
+ - Cumulus lo adapta con poco esfuerzo
 
-For the latest on Cumulus see a recent talk from Rob Habermeier below.
+Para lo último sobre Cumulus, véase una charla reciente de Rob Habermeier a continuación.
 
 [![img](http://img.youtube.com/vi/thgtXq5YMOo/0.jpg)](https://www.youtube.com/watch?v=thgtXq5YMOo)
 
-#### Ensuring a fair validator choice
+#### Garantizar una elección justa del validador
 
-In Polkadot validators are automatically selected to validate for each parachain
-using randomness from the relay chain. Each era on the relay chain these validators will be rotated
-to ensure that there is a fair validator choice and that no single validator continues
-to validate for a specific chain. As a parachain developer or operator you will get
-this security feature included once you've made your chain compatible with Polkadot
-and acquired a spot on the parachain registry.
+En Polkadot los validadores se seleccionan automáticamente para validar para cada parachain utilizando la aleatoriedad de la relay chain. Cada era en la relay chain estos validadores se rotarán para asegurar que haya una elección justa de validador y que ningún validador individual continúe validando para una cadena específica. Como desarrollador u operador de parachains, esta función de seguridad se incluirá una vez que haya hecho su cadena compatible con Polkadot y haya adquirido un lugar en el registro de parachains.
 
-### How to include your parachain in polkadot
+### Cómo incluir su parachain en polkadot
 
-The second very important step you will need to do once you're ready to integrate
-your chain into Polkadot is to secure a spot in the parachain registry.
+El segundo paso muy importante que tendrá que hacer una vez que esté listo para integrar su cadena en Polkadot es asegurar un lugar en el registro de parachain.
 
-In the whitepaper it states that parachains will only be added to the
-network through a process of full referendum voting by the governance
-mechanism. Furthermore, the chain would exist until it is again voted
-out by a similar mechanism in which a referendum would grant a grace
-period for users to migrate off chains.
+En el white paper se afirma que las parachains sólo se añadirán a la red a través de un proceso de votación en referéndum pleno por parte del mecanismo de gobernanza. Además, la cadena existiría hasta que sea nuevamente expulsada por un mecanismo similar en el que un referéndum concedería un período de gracia para que los usuarios migren de las cadenas
 
-It is still believed that the governance mechanism will integrate some
-especially useful and value-adding chains this way for the benefit of
-the Polkadot network as a whole. But this will not be the only way for 
-you to acquire a spot for your parachain. If you do not want to persuade
-the governance mechanism that your chain is useful then there is another
-way.
+Se sigue creyendo que el mecanismo de gobernanza integrará de esta manera algunas cadenas especialmente útiles y de valor añadido en beneficio de la red Polkadot en su conjunto. Pero esta no será la única manera de que usted adquiera un lugar para su parachain. Si usted no quiere persuadir al mecanismo de gobierno de que su cadena es útil, entonces hay otra manera.
 
-The current thinking is that there will be an auction mechanism
-that will distribute the spots in the parachain registry. This auction 
-will likely be a [Vickrey](https://en.wikipedia.org/wiki/Vickrey_auction) auction,
-also know as a second-price auction. The auction would be used to allocate registry entries
-to parachain projects for differing but constant time durations (eg. 6 months, 12 months,
-24 months). In order to participate in the auction participants need to stake DOTs. The
-participant which stakes enough DOTs to be the highest bidder
-will be required to lock up the number of DOTs of the second-highest bid
-for the duration of the registry inclusion.
+El pensamiento actual es que habrá un mecanismo de subasta que distribuirá los anuncios en el registro de parachain. Esta subasta será probablemente una subasta [Vickrey](https://es.wikipedia.org/wiki/Subasta_Vickrey), también conocida como subasta de segundo precio. La subasta se utilizaría para asignar entradas de registro a proyectos de parachain para duraciones de tiempo diferentes pero constantes (por ejemplo, 6 meses, 12 meses, 24 meses). Para participar en la subasta, los participantes deben depositar DOTs. El participante que apueste por un número suficiente de DOTs para ser el mejor postor deberá bloquear el número de DOTs de la segunda oferta más alta mientras dure la inclusión en el registro.
 
-Builders can start thinking now about how to fund enough DOTs to ensure they can
-secure an entry on the parachain registry. Some ideas include a crowdfunding
-campaign in which participates will stake their own DOTs individually for a 
-single chain, a crowdsale for which participants will purchase some tokens
-of a chain so that chain can have enough DOTs to stake its own entry, or through
-private fundraising means.
+Los desarrolladores pueden empezar a pensar ahora en cómo obtener suficientes DOTs para asegurar que puedan obtener una entrada en el registro de parachain. Algunas ideas incluyen una campaña de financiación colectiva en la que los participantes depositarán sus propios DOTs individualmente para una sola cadena, una venta en masa para la cual los participantes comprarán algunas fichas de una cadena de modo que la cadena pueda tener suficientes DOTs para depositar su propia entrada, o a través de medios de recaudación de fondos privados.
 
-#### What happens when the time runs out?
+#### ¿Qué pasa cuando se acaba el tiempo?
 
-Once you secure your entry into the parachain registry you are guaranteed that
-spot until either 1) the duration of the time attached to that entry has elapsed
-or 2) the governance mechanism votes to remove it.
+Una vez que asegure su entrada en el registro de parachain, se le garantiza ese lugar hasta que 1) la duración del tiempo vinculado a esa entrada haya transcurrido o 2) el mecanismo de gobierno vote para eliminarlo.
 
-Option 2 will probably only happen in dire circumstances and will not be something
-that commonly takes place. Option 1 will be the way that most chains will expire
-off the Polkadot network. 
+La opción 2 probablemente sólo ocurrirá en circunstancias extremas y no será algo que ocurra comúnmente. La opción 1 será la forma en que la mayoría de las cadenas expirarán de la red de Polkadot.
 
-When your chain is approaching the end of its time duration some things that could
-happen include: a referendum could be
-held by the stakeholders of the chain to extend the lifetime by continuing to stake DOTs (if your chain implements
-on-chain governance), users can safely migrate off the platform to an
-alternative, a campaign could be held to fund the DOTs to acquire a different spot
-on the registry.
+Cuando su cadena se está acercando al final de su duración, algunas cosas que podrían suceder incluyen: un referéndum podría ser realizado por las partes interesadas de la cadena para extender el tiempo de vida al continuar con los DOTs (si su cadena implementa el gobierno en la cadena), los usuarios pueden migrar con seguridad fuera de la plataforma a una alternativa, una campaña podría ser llevada a cabo para financiar a los DOTs para adquirir un lugar diferente en el registro.
 
-In most cases it will likely be fairly straightforward to "renew" your
-entry on the parachain registry by continuing to stake DOTs.
+En la mayoría de los casos probablemente será bastante sencillo "renovar" su inscripción en el registro de parachain al seguir participando con DOTs.
 
-### Benefits of being a parachain
+### Beneficios de ser una parachain
 
-The benefit of being a parachain on Polkadot is that your chain will be secured
-with the same security as the entire Polkadot network without you needing to 
-maintain your own consensus. On top of this, your chain will be able to interact
-with all other Polkadot parachains through the interchain communication system.
+La ventaja de ser una parachain en Polkadot es que su cadena estará protegida con la misma seguridad que toda la red de Polkadot sin necesidad de que usted tenga que mantener su propio consenso. Además, su cadena podrá interactuar con todas las demás parachains de Polkadot a través del sistema de comunicación entre cadenas.
 
-The tools and monitoring systems being built for Polkadot or different parachains
-will be easily portable or re-usable in the future by new parachains. Without Polkadot,
-sovereign chains would need to have compatible wallets that supported them.
-With Polkadot, much of the basic tooling like wallets and block explorers
-will already be available and configurable to your parachain.
+Las herramientas y sistemas de monitorización que se están construyendo para Polkadot o para diferentes parachains serán fácilmente adaptables o reutilizables en el futuro por nuevas parachains. Sin Polkadot, las cadenas soberanas necesitarían tener carteras compatibles que las soportaran. Con Polkadot, gran parte de las herramientas básicas como carteras y exploradores de bloques ya estarán disponibles y configurables para su parachain.
 
-Being a Polkadot parachain will allow you and your community
-to experiment with the latest innovations in blockchain tech. Whether
-you are interested in governance, scalability, privacy, or custom VMs,
-Polkadot is general enough that it will support your innovations at launch
-and into the future.
+Ser una parachain de Polkadot le permitirá a usted y a su comunidad experimentar con las últimas innovaciones en tecnología de cadenas de bloques. Tanto si está interesado en la gobernanza, la escalabilidad, la privacidad o las VM personalizadas, Polkadot es lo suficientemente general como para soportar sus innovaciones en el lanzamiento y en el futuro.
 
-_You've reached the end of the parachain section, you can either read about smart contracts
-or go straight to the [conclusion](#conclusion)._
+_Has llegado al final de la sección de parachain, puedes leer sobre los contratos inteligentes o ir directamente a la [conclusión](#conclusion)._
 
-## So you want to build a smart contract
+## Entonces, quieres construir un contrato inteligente
 
-The Polkadot relay chain itself will not support smart contracts but
-since Polkadot is a network of many heterogeneous blockchains, there
-will be parachains that do.
+La relay chain de Polkadot en sí misma no soportará contratos inteligentes, pero como Polkadot es una red de muchas cadenas de bloques heterogéneas, habrá parachains que sí los soporten.
 
-Already Parity Technologies has laid much of the groundwork for an
-out-of-the-box solution for parachains that want to include smart contract
-functionality. The Substrate [contract](https://github.com/paritytech/substrate/tree/master/srml/contract)
-module in the core SRML will support smart contracts that are compiled
-to Wasm. 
+Parity Technologies ya ha sentado gran parte del trabajo preliminar para una solución lista para usar para las parachains que desean incluir la funcionalidad de contratos inteligentes. El módulo Substrate [contract](https://github.com/paritytech/substrate/tree/master/srml/contract) en el núcleo de SRML soportará contratos inteligentes que se compilan en Wasm.
 
-In order to develop a smart contract that compiles to Wasm, an
-appropriate language is also needed. For this, Parity has been working
-on a domain specific language called [pDSL](#pdsl-paritys-domain-specific-language).
+Para desarrollar un contrato inteligente que compile en Wasm, también se necesita un lenguaje apropiado. Para ello, Parity ha estado trabajando en un lenguaje específico de dominio llamado [pDSL](#pdsl-paritys-domain-specific-language).
 
-One project that has announced intent to become a Polkadot
-parachain with support for smart contracts is [Edgeware](#edgeware). As
-the ecosystem matures, there is a high probability that more chains will
-come forward as smart contract enabled parachains.
+Un proyecto que ha anunciado su intención de convertirse en una parachain de Polkadot con soporte para contratos inteligentes es [Edgeware](#edgeware). A medida que el ecosistema madure, existe una alta probabilidad de que más cadenas se presenten como parachains inteligentes habilitados por contrato.
 
-Polkadot will also be compatible with preexisting smart contract platforms
-such as Ethereum and Tezos through bridges. This means that even work spent
-developing on these platforms today may be applicable to running on Polkadot
-in the future.
+Polkadot también será compatible con plataformas de contratos inteligentes preexistentes como Ethereum y Tezos a través de puentes. Esto significa que incluso el trabajo invertido en el desarrollo de estas plataformas hoy en día puede ser aplicable a la ejecución en Polkadot en el futuro.
 
 ### Edgeware
 
-Edgeware is a planned parachain for Polkadot which will
-allow for smart contracts. Along with other interesting innovations in governance
-and token distribution, it will likely be the first parachain that will connect
-to the Polkadot mainnet with smart contracts enabled. You can stay up to date with
-the project on their [website](https://edgewa.re).
+Edgeware es una parachain planificado para Polkadot que permitirá contratos inteligentes. Junto con otras innovaciones interesantes en la gobernanza y la distribución de tokens, probablemente será la primera parachain que se conectará a la red principal de Polkadot con contratos inteligentes habilitados. Puedes estar al día con el proyecto en su página [web](https://edgewa.re).
 
-### pDSL (Parity's Domain Specific Language)
+### pDSL (Lenguaje específico de dominio de Parity)
 
-The [pDSL](https://github.com/Robbepop/pdsl) is intended to be a new domain specific
-language for writing smart contracts in Rust that will compile down to Wasm code.
-As stated in the README, it is still in an experimental phase and missing a lot of the
-planned features but it is possible to start writing smart contracts with it today.
+El [pDSL](https://github.com/Robbepop/pdsl) pretende ser un nuevo lenguaje específico de dominio para la elaboración de contratos inteligentes en Rust que se compilará hasta el código Wasm. Como se indica en el README, todavía está en una fase experimental y le faltan muchas de las características planeadas, pero es posible empezar a escribir contratos inteligentes con él hoy.
 
-For the interested developers, they can get started writing smart contracts using pDSL
-by studying the [examples](https://github.com/Robbepop/pdsl/tree/master/examples) which have 
-already been written. These can be used as guideposts to writing more complex logic which
-will be deployable on smart contract parachains. However, since the ecosystem is still
-so early it's probably not a good idea to try to write production code with it yet.
+Para los desarrolladores interesados, pueden empezar a escribir contratos inteligentes usando pDSL estudiando los [ejemplos](https://github.com/Robbepop/pdsl/tree/master/examples) que ya han sido escritos. Estos pueden ser usados como guías para escribir lógica más compleja que será desplegable en parachains de contratos inteligentes. Sin embargo, dado que el ecosistema todavía es tan reciente, probablemente no sea una buena idea intentar escribir código de producción con él.
 
-## Deploying your app as a smart contract
+## Despliegue de su aplicación como un contrato inteligente
 
-A smart contract is in essence some code that exists at an address on chain and
-can be executed. Once the code is developed it needs some way to actually get
-onto the chain and be available to users. Deploying your smart contract on chain
-will vary depending on which specific platform you are targeting, but in
-general it will involve sending a special transaction which will `create` your
-smart contract on the ledger. Usually this transaction will require a fee to cover
-the computation costs of any constructor logic and for storage that it consumes.
+Un contrato inteligente es en esencia un código que existe en una dirección de la cadena y que puede ser ejecutado. Una vez que el código es desarrollado, necesita alguna forma de entrar en la cadena y estar disponible para los usuarios. La implementación de su contrato inteligente en la cadena variará dependiendo de la plataforma específica a la que se dirija, pero en general implicará el envío de una transacción especial que `creará` su contrato inteligente en el libro mayor. Por lo general, esta transacción requerirá una tarifa para cubrir los costes de cálculo de cualquier lógica de constructor y para el almacenamiento que consume.
 
-## Paying for your smart contract
+## Pagando por su contrato inteligente
 
-Different platforms will have different ways for paying for your
-smart contract deployment and maintenance.
+Diferentes plataformas tendrán diferentes maneras de pagar por el despliegue y mantenimiento de su contrato inteligente.
 
-Some ways you different platforms might implement paying for smart contracts:
+Algunas de las formas en que las diferentes plataformas pueden implementar el pago de contratos inteligentes:
 
- - a transaction fee associated with the deploy transaction
- - a subscription model in which you pay to subscribe to a chain
- - access token model in which you must hold enough tokens to use a chain (cp. EOS)
- - storage rent
- - free trial. Some chains may want to attract new developers with promotions
+ - un cargo por transacción asociado con la transacción de implementación
+ - un modelo de suscripción en el que se paga para suscribirse a una cadena
+ - modelo de token de acceso en el que debe tener suficientes tokens para usar una cadena (cp. EOS)
+ - alquiler de almacenamiento
+ - prueba gratuita. Algunas cadenas pueden querer atraer a nuevos desarrolladores con promociones
 
-In general most smart contract platforms implement the notion of `gas` which
-represents the computation required to run your smart contract logic across
-the network. Gas is usually paid for by paying the corresponding `gas price`
-that is specified in the transaction. 
+En general, la mayoría de las plataformas de contratos inteligentes implementan la noción de `gas`, que representa el cálculo necesario para ejecutar la lógica de contratos inteligentes a través de la red. El gas se paga normalmente pagando el `gas price` correspondiente que se especifica en la transacción.
 
-There are a couple things you will want to keep in mind while developing your
-application to ensure that the gas cost of it stays within reasonable bounds
-and won't become too expensive. These are storage of your contract and the 
-complexity of the logic. 
+Hay un par de cosas que usted querrá tener en cuenta al desarrollar su aplicación para asegurarse de que el coste del gas se mantenga dentro de unos límites razonables y no se vuelva demasiado caro. Estos son el almacenamiento de su contrato y la complejidad de la lógica.
 
-Storage is expensive on chain since it increases the data required for nodes
-to perform a full sync. When developing smart contracts try to keep the amount
-of data sent to the chain as low as possible. To do this you may want to consider
-decentralized storage solutions such as [IPFS](https://ipfs.io) or [Storj](https://storj.io/)
-which can often work parallel to your smart contract, and allow you to keep only
-a pointer to the storage as a hash on chain. 
+El almacenamiento es costoso en la cadena, ya que aumenta los datos necesarios para que los nodos realicen una sincronización completa. Al desarrollar contratos inteligentes, trate de mantener la cantidad de datos enviados a la cadena lo más bajo posible. Para ello, es posible que desee considerar soluciones de almacenamiento descentralizadas como [IPFS](https://ipfs.io/) o [Storj](https://storj.io/), que a menudo pueden funcionar en paralelo a su contrato inteligente, y le permiten mantener sólo un puntero al almacenamiento como un hash en la cadena.
 
-Likewise it is advisable to keep the complexity of the on-chain logic as low
-as possible in order to minimize the amount of gas fees. Often this means that
-any non-critical calculations should be done before sending data to the chain.
+Asimismo, es aconsejable mantener la complejidad de la lógica en la cadena lo más baja posible para minimizar el importe de las tasas de gas. A menudo esto significa que cualquier cálculo no crítico debe hacerse antes de enviar los datos a la cadena.
 
-### It's still early
+### Aún es temprano
 
-Smart contracts on Polkadot is still very early, which explains why this section
-is composed of pointers to in progress projects and non-specific information.
-Keep up to date with the projects above and watch out for the first testnets to be released.
-If you're feeling brave you can try to work with the tools such as pDSL but be 
-aware that much of the technology is still prior to stable release so will probably
-change as we continue progress toward the future mainnet Polkadot release.
+Los contratos inteligentes en Polkadot todavía son muy tempranos, lo que explica por qué esta sección está compuesta de indicadores de proyectos en curso e información inespecífica. Manténgase al día con los proyectos anteriores y esté atento a las primeras redes de prueba que se lanzarán. Si te sientes valiente puedes intentar trabajar con herramientas como pDSL pero ten en cuenta que gran parte de la tecnología es anterior a la versión estable, así que probablemente cambiará a medida que continuemos avanzando hacia la futura versión de Polkadot para mainnet.
 
-## Conclusion
+## Conclusión
 
-Hopefully this guide has helped you to make the right decision for whether
-your new project will be a parachain or a smart contract, and shown you the
-essential resources for which you can use to start developing on Polkadot today.
-Even though the tooling is still maturing, there is a benefit for arriving to
-the scene early: you have the ability to innovate by creating something
-truly new. 
+Esperamos que esta guía le haya ayudado a tomar la decisión correcta sobre si su nuevo proyecto será un parachain o un contrato inteligente, y le haya mostrado los recursos esenciales que puede utilizar para empezar a desarrollar en Polkadot hoy mismo. A pesar de que las herramientas aún están madurando, hay un beneficio por llegar temprano a la escena: tienes la habilidad de innovar creando algo verdaderamente nuevo.
 
-If you would like to share your ideas for a parachain or a smart contract
-feel free to talk to us in the [Polkadot Watercooler](https://riot.im/app/#/room/#polkadot-watercooler:matrix.org) and if you have questions
-regarding development you can try asking in the [Polkadot Beginners Lounge](https://riot.im/app/#/room/#polkadotnoobs:matrix.org).
-Keep up to date by following the appropriate [social channels](https://wiki.polkadot.network/en/latest/community/) and good luck
-building your vision into reality on Polkadot!
+Si desea compartir sus ideas para una parachain o un contrato inteligente, no dude en hablar con nosotros en el [Polkadot Watercooler](https://riot.im/app/#/room/#polkadot-watercooler:matrix.org) y si tiene preguntas sobre el desarrollo, puede intentarlo en el [Polkadot Beginners Lounge](https://riot.im/app/#/room/#polkadotnoobs:matrix.org). Manténgase al día siguiendo los [canales sociales](https://wiki.polkadot.network/en/latest/community/) apropiados y buena suerte construyendo su visión en realidad en Polkadot!

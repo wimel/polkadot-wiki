@@ -8,7 +8,7 @@ nav:
  - Desarrollo:
    - Cumulus: polkadot/build/cumulus.md
    - Inicio: polkadot/build/index.md
-   - Building on Polkadot: polkadot/build/build-with-polkadot.md
+   - Desarrollando en Polkadot: polkadot/build/build-with-polkadot.md
    - Deploy Parachains: polkadot/build/deploy-parachains.md
    - Examples: polkadot/build/examples/index.md
    - Extrinsic Format: polkadot/build/extrinsic-format.md
