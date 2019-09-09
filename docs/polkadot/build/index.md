@@ -1,38 +1,29 @@
-# Builders Portal
+# Portal para desarrolladores
 
 !!! info
-    _🏗️ Polkadot is under construction, these documents will rapidly change._
+    _🏗️ Polkadot está en construcción, estos documentos cambiarán rápidamente._
 
-Welcome to the build section of the Polkadot wiki.
+Bienvenido a la sección de desarrollo de la wiki de Polkadot.
 
-Here you will be able to find the most up-to-date information
-on the status of the development tools in the ecosystem. We are
-always adding new tools and frameworks as we learn about them
-so if you are working on something that should be included please
-reach out to us on [Riot](https://riot.im/app/#/room/#polkadot-watercooler:matrix.org).
+Aquí podrá encontrar la información más actualizada sobre el estado de las herramientas de desarrollo en el ecosistema. Siempre estamos agregando nuevas herramientas y marcos de trabajo a medida que aprendemos sobre ellos, así que si está trabajando en algo que debería incluirse, por favor, póngase en contacto con nosotros en [Riot](https://riot.im/app/#/room/#polkadot-watercooler:matrix.org).
 
-This section of the wiki is divided into three parts: the first
-part takes the shape of a technical guide that will get you quickly
-up to speed with developing for Polkadot. The second part is an
-up-to-date catalogue of developer tooling. The third part is a
-resource which will contain some deeper technical information
-that is not available to be found elsewhere.
+Esta sección de la wiki está dividida en tres partes: la primera parte tiene la forma de una guía técnica que le permitirá ponerse al día rápidamente con el desarrollo para Polkadot. La segunda parte es un catálogo actualizado de herramientas para desarrolladores. La tercera parte es un recurso que contendrá información técnica más profunda que no está disponible en ninguna otra parte.
 
-## Development Guide
+## Guía de desarrollo
 
- - [How Can I Build With Polkadot?](./build-with-polkadot.md) **Start here**
- - [Development Roadmap](./dev-roadmap.md)
+ - [¿Cómo puedo desarrollar en Polkadot?](./build-with-polkadot.md) **Empiece aquí**
+ - [Hoja de ruta para el desarrollo](./dev-roadmap.md)
 
-## Tools
+## Herramientas
 
-- [Tools](./tools/index.md) - Maintained list of tools.
-- [Subkey](./tools/subkey.md) - Commandline utility for generating Substrate keys.
+- [Herramientas](./tools/index.md) - Lista mantenida de herramientas.
+- [Subkey](./tools/subkey.md) - Utilidad de línea de comandos para generar claves de Substrate.
 
-## Resources
+## Recursos
 
  - [Extrinsics Format](./extrinsic-format.md)
- - [Networks](./networks.md)
- - [Examples](./examples/index.md)
- - [Rust Style Guide](./rust-style-guide.md)
+ - [Redes](./networks.md)
+ - [Ejemplos](./examples/index.md)
+ - [Guía de estilo para Rust](./rust-style-guide.md)
 
-More coming soon.
+Próximamente habrá más.

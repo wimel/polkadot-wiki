@@ -7,7 +7,7 @@ nav:
  - Inicio: index.md
  - Desarrollo:
    - Cumulus: polkadot/build/cumulus.md
-   - Home: polkadot/build/index.md
+   - Inicio: polkadot/build/index.md
    - Building on Polkadot: polkadot/build/build-with-polkadot.md
    - Deploy Parachains: polkadot/build/deploy-parachains.md
    - Examples: polkadot/build/examples/index.md
