@@ -1,48 +1,37 @@
-# Home
+# Inicio
 
-## Why Polkadot?
+## ¿Por qué Polkadot?
 
-Polkadot is built to connect private/consortium chains, public/permission-less networks, oracles and future
-technological developments yet to be created in the Web3 ecosystem. It enables an internet where independent
-blockchains can exchange information and trust-free transactions via the Polkadot relay chain, with the key
-tenets of scalability, governance and interoperability.
+Polkadot está diseñado para conectar cadenas privadas/consorcios, redes públicas/sin autorización, oráculos y futuros desarrollos tecnológicos aún por crear en el ecosistema Web3. Permite una Internet en la que las cadenas de bloques independientes puedan intercambiar información y transacciones sin confianza a través de la relay chain de Polkadot, con los principios clave de la escalabilidad, la gobernanza y la interoperabilidad.
 
-By connecting these dots, we allow for the development of a truly decentralized web, serving as a
-foundational building block for the creation of an ecosystem of Dapps and services that will distribute power
-and equity for the common good.
+Al conectar estos puntos, permitimos el desarrollo de una red verdaderamente descentralizada, que sirve como un componente fundamental para la creación de un ecosistema de Dapps y servicios que distribuirá el poder y la equidad para el bien común.
 
-## What Is Polkadot?
+## ¿Qué es Polkadot?
 
-Polkadot is a protocol that allows independent blockchains to exchange information. Polkadot is an inter-chain
-blockchain protocol which unlike internet messaging protocols (e.g. TCP/IP) also enforces the order and the validity
-of the messages between the chains. This interoperability also allows the additional benefit of scalability by creating
-a general environment for multiple state machines.
+Polkadot es un protocolo que permite a las cadenas de bloques independientes intercambiar información. Polkadot es un protocolo de bloques entre cadenas que, a diferencia de los protocolos de mensajería de Internet (por ejemplo, TCP/IP), también hace cumplir el orden y la validez de los mensajes entre las cadenas. Esta interoperabilidad también permite el beneficio adicional de la escalabilidad al crear un entorno general para máquinas de estado múltiple.
 
-Polkadot is a heterogeneous multi-chain technology. It consists of the relay chain, parachains, and bridges
-to other networks. The relay chain is responsible for achieving consensus and transaction
-delivery among parachains. Parachains are independent blockchains with their own state transitions
-that gather and process transactions while plugging in to the security of the relay chain. Bridges
-allow the Polkadot network to make it interoperable with other blockchains not built to natively support it.
+Polkadot es una tecnología heterogénea multicadena. Consiste en la relay chain, parachains y puentes a otras redes. La relay chain es responsable de lograr el consenso y la entrega de transacciones entre las parachains. Las parachains son cadenas de bloques independientes con sus propias transiciones de estado que reúnen y procesan transacciones mientras se conectan a la seguridad de la relay chain. Los puentes permiten que la red Polkadot sea interoperable con otras cadenas de bloques no construidas para soportarla de forma nativa.
 
-For a video overview of the architecture of Polkadot watch the video below for the whiteboard interview with W3F researcher Alistair Stewart:
+
+Para una visión general de la arquitectura de Polkadot, vea el siguiente video de la entrevista con el investigador de W3F Alistair Stewart:
 
  <iframe width="560" height="315" src="https://www.youtube.com/embed/xBfC6uTjvbM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Want to learn more?
+## ¿Quiere aprender más?
 
-- [Explore the Wiki](./polkadot/learn/comparisons.md) - Read the informational section of the wiki.
-- [Relevant Links](./polkadot/learn/relevant-links.md) - **Comprehensive links about Polkadot**
+- [Explora la Wiki](./polkadot/learn/comparisons.md) - Lea la sección informativa de la wiki.
+- [Links relevantes](./polkadot/learn/relevant-links.md) - **Enlaces informativos sobre Polkadot**
 
-## Want to build on Polkadot?
+## ¿Quiere desarrollar en Polkadot?
 
-- [Builders Portal](./polkadot/build) - Tools, libraries, and resources to help you build.
-- [Starters Guide](./polkadot/build/build-with-polkadot.md) - **Overview on how to get started building your project on Polkadot.**
-## Want to run a node?
+- [Portal para desarrolladores](./polkadot/build) - Herramientas, librerías y recursos para ayudarle a desarrollar.
+- [Guía de inicio](./polkadot/build/build-with-polkadot.md) - **Descripción general de cómo empezar a construir su proyecto en Polkadot.**
+## ¿Quieres ejecutar un nodo?
 
-- [Run a Node](./polkadot/node/) - Information covering running a node on the Polkadot network.
+- [Inicie un nodo](./polkadot/node/) - Información sobre la ejecución de un nodo en la red Polkadot.
 
-## Resources
+## Recursos
 
-- [Community / Ecosystem](./community.md) - List of community rooms and channels to talk to others about Polkadot.
-- [Sample Applications](./polkadot/build/examples/) - Some sample applications that are built on or currently being built for Polkadot.
-- [Contributing Guide](./contributing.md) - Rules for contributing to the wiki.
+- [Comunidad / Ecosistema](./community.md) - Lista de salas y canales de la comunidad para hablar con otros sobre Polkadot.
+- [Ejemplos de aplicaciones](./polkadot/build/examples/) - Algunas aplicaciones de ejemplo que están construidas o en proceso de construcción para Polkadot.
+- [Guía de contribución](./contributing.md) - Normas para contribuir a la wiki.

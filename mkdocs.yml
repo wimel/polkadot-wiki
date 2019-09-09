@@ -4,7 +4,7 @@ site_author: 'Web3 Foundation'
 site_url: https://wiki.polkadot.network
 
 nav:
- - Home: index.md
+ - Inicio: index.md
  - Build:
    - Cumulus: polkadot/build/cumulus.md
    - Home: polkadot/build/index.md
