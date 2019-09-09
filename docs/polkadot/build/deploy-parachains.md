@@ -1,28 +1,28 @@
-# How to view and deploy parachains
+# Cómo ver y desplegar parachains
 
-The guide has been updated to work with the Alexander testnet.
+La guía ha sido actualizada para funcionar con la red de pruebas de Alexander.
 
-## How to view parachains
+## Cómo ver las parachains
 
-On the [Polkadot UI](https://polkadot.js.org/apps/#/explorer) navigate to the `Chain State` tab. Select the `parachains` module and the `parachains()` then hit the `+` button. It will return an array of the currently active parachains.
+En la [interfaz de Polkadot](https://polkadot.js.org/apps/#/explorer), vaya a la pestaña `Chain State`. Selecciona el módulo `parachains` y `parachains()` y pulsa el botón `+`. Devolverá una lista de las parachains actualmente activas.
 
-## How to deploy the Adder parachain
+## Cómo desplegar parachain de Adder
 
-**You will need to have the minimum deposit needed to create a referendum. Currently this minimum is 5 DOTs.**
+**Necesitará tener el depósito mínimo necesario para crear un referéndum. Actualmente este mínimo es de 5 DOTs.**
 
-The `adder` parachain is a simple parachain which will keep a value in storage and add to this value as messages are sent to it. It can be found in the Polkadot repository under the `test-parachains` folder.
+El parachain `adder` es un parachain simple que mantendrá un valor en el almacenamiento y añadirá a este valor a medida que se le envíen mensajes. Puede encontrarse en el repositorio de Polkadot bajo la carpeta `test-parachains`.
 
-> A slightly out-of-date video version of this guide presented by Adrian Brink is available [here](https://www.youtube.com/watch?v=pDqkzvA4C0E). When the two guides diverge, please refer to this written text as definitive and updated.
+> Una versión de video ligeramente desactualizada de esta guía presentada por Adrian Brink está disponible [aquí](https://www.youtube.com/watch?v=pDqkzvA4C0E). Cuando las dos guías difieran, por favor refiérase a este texto escrito como definitivo y actualizado.
 
-### Building the code
+### Desarrollando el código
 
-The first step is to download locally the Polkadot code.
+El primer paso es descargar localmente el código de Polkadot.
 
 ```bash
 git clone https://github.com/paritytech/polkadot.git
 ```
 
-Now make sure you have Rust installed.
+Ahora asegúrese de tener Rust instalado.
 
 ```bash
 curl https://sh.rustup.rs -sSf | sh
@@ -30,18 +30,18 @@ sudo apt install make clang pkg-config libssl-dev
 rustup update
 ```
 
-Now navigate to the `test-parachains` folder in the Polkadot code repository and run the build script.
+Ahora navegue hasta la carpeta `test-parachains` en el repositorio de código de Polkadot y ejecute el script de compilación.
 
 ```bash
 cd polkadot/test-parachains
 ./build.sh
 ```
 
-This will create the Wasm executable of the simple `adder` parachain contained in this folder. This parachain will simply add messages that are sent to it. The Wasm executable will output into the `parachains/test/res/adder.wasm` path so make sure you are able to find it there.
+Esto creará el ejecutable Wasm `adder` simple de parachain contenido en esta carpeta. Esta parachain simplemente agregará los mensajes que se le envíen. El ejecutable Wasm se generará en la ruta `parachains/test/res/adder.wasm`, así que asegúrese de que puede encontrarlo allí.
 
-You will need to build and run the collator node in order to get the genesis state of this parachain.
+Necesitará construir y ejecutar el nodo collator para obtener el estado de génesis de esta parachain.
 
-Navigate to the `test-parachains/adder/collator` directory and run the `build` and `run` commands.
+Navegue hasta el directorio `test-parachains/adder/collator` y ejecute los comandos `build` y `run`.
 
 ```bash
 cargo build
@@ -49,7 +49,7 @@ cargo run
 [ctrl-c]
 ```
 
-Feel free to stop the collator node right away. You will get some output that looks like this:
+Siéntase libre de detener el nodo collator de inmediato. Obtendrá una salida que se parece a ésta:
 
 ```
 Starting adder collator with genesis:
@@ -58,31 +58,31 @@ Dec: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 Hex: 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000011b4d03dd8c01f1049143cf9c4c817e4b167f1d1b83e5c6f0f10d89ba1e7bce
 ```
 
-The important information is the hex string. This is your genesis state and you will need to save it for the next steps.
+La información importante es la cadena hexadecimal. Este es su estado de génesis y necesitará guardarlo para los próximos pasos.
 
-### Deploying the parachain
+### Desplegando la parachain
 
-Go to [Polkadot UI](https://polkadot.js.org/apps/#/extrinsics) on the `Extrinsics` tab. Select the account you wish to deploy the parachain from. You will need to create a referendum to deploy the parachain.
+Vaya a la [interfaz de usuario de Polkadot]((https://polkadot.js.org/apps/#/extrinsics)) en la pestaña `Extrinsics`. Seleccione la cuenta desde la que desea desplegar la parachain. Necesitará crear un referéndum para desplegar la parachain.
 
-Click on `democracy` -> `propose(proposal,value)` -> `parachains` -> `registerParachain(id,code,initial_head_data)`.
+Haga click en `democracy` -> `propose(proposal,value)` -> `parachains` -> `registerParachain(id,code,initial_head_data)`.
 
-In the `id` input enter in the id of the parachain. In the case of the simple adder it will be `100`. In the `code` field click on the page button and then upload the `adder.wasm` binary that was compiled from before. In the `initial_head_data` we will copy and paste the hex data that we got from running the collator node. In the `value` field you will need to input the minimum required value for creating a referendum. At the time of writing this is _5 DOTs_ on the Alexander testnet.
+En la entrada `id`, introduzca el id de la parachain. En el caso adder simple será de `100`. En el campo `code` haga clic en el botón de la página y luego suba el binario `adder.wasm` que fue compilado antes. En los datos `initial_head_data` copiaremos y pegaremos los datos hexadecimales que obtuvimos al ejecutar el nodo collator. En el campo `value` deberá introducir el valor mínimo requerido para crear un referéndum. En el momento de redactar el presente informe, se trata de 5 DOTs en la red de pruebas de Alexander.
 
 ![registering a parachain](../../img/parachain/register.png)
 
-If you navigate to the `Democracy` tab you will be able to see your proposal in the proposals section.
+Si navega a la pestaña `Democracy` podrá ver su propuesta en la sección de propuestas.
 
-Once you wait for the proposal to become a referendum you will be able to vote `Nay` or `Aye` on it. Assumably, you will vote Aye as this will be a vote for the deployment of your parachain.
+Una vez que esperes a que la propuesta se convierta en un referéndum, podrás votar `Nay` o `Aye`. Asumiblemente, usted votará a favor ya que esto será un voto para el despliegue de su parachain.
 
 ![parachain referendum](../../img/parachain/referendum.png)
 
-After the voting period of your referendum goes through you will be able to query the state of your parachain.
+Después de que el período de votación de su referéndum pase, usted podrá consultar el estado de su parachain.
 
-You can go to the `Chain State` tab and by querying the `parachains` state you should be able to see some information on your parachain.
+Puedes ir a la pestaña `Chain State` y consultando el estado de las `parachains` deberías poder ver alguna información sobre su parachain.
 
 ![parachain info](../../img/parachain/info.png)
 
-### Interacting with the parachain
+### Interactuando con la parachain
 
 _Coming soon_
 Wasm
