@@ -16,10 +16,12 @@ El parachain `adder` es un parachain simple que mantendrá un valor en el almace
 
 ### Desarrollando el código
 
-El primer paso es descargar localmente el código de Polkadot.
+El primer paso es descargar localmente el código de Polkadot en la rama `v0.4`.
 
 ```bash
 git clone https://github.com/paritytech/polkadot.git
+cd polkadot
+git checkout v0.4
 ```
 
 Ahora asegúrese de tener Rust instalado.
@@ -62,7 +64,7 @@ La información importante es la cadena hexadecimal. Este es su estado de génes
 
 ### Desplegando la parachain
 
-Vaya a la [interfaz de usuario de Polkadot]((https://polkadot.js.org/apps/#/extrinsics)) en la pestaña `Extrinsics`. Seleccione la cuenta desde la que desea desplegar la parachain. Necesitará crear un referéndum para desplegar la parachain.
+Vaya a la [interfaz de usuario de Polkadot](https://polkadot.js.org/apps/#/extrinsics) en la pestaña `Extrinsics`. Seleccione la cuenta desde la que desea desplegar la parachain. Necesitará crear un referéndum para desplegar la parachain.
 
 Haga click en `democracy` -> `propose(proposal,value)` -> `parachains` -> `registerParachain(id,code,initial_head_data)`.
 
